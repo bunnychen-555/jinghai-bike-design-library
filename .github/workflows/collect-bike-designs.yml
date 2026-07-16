@@ -31,7 +31,7 @@ jobs:
 
       - name: Save candidate list
         run: |
-          if git diff --quiet -- data/; then
+          if [ -z "$(git status --porcelain -- data/)" ]; then
             echo "No new candidates"
             exit 0
           fi
