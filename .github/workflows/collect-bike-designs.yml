@@ -28,7 +28,13 @@ jobs:
 
       - name: Collect licensed references
         run: python crawler/collect_bikes.py
-
+        
+      - name: Sync candidates to Google Sheets
+        env:
+          GOOGLE_SCRIPT_URL: ${{ secrets.GOOGLE_SCRIPT_URL }}
+          GOOGLE_INGEST_TOKEN: ${{ secrets.GOOGLE_INGEST_TOKEN }}
+        run: python crawler/sync_to_google.py
+        
       - name: Save candidate list
         run: |
           if [ -z "$(git status --porcelain -- data/)" ]; then
